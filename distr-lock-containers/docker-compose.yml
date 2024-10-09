@@ -1,0 +1,56 @@
+version: '3.8'
+services:
+  postgres_booking_service:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: develop
+      POSTGRES_PASSWORD: develop
+      POSTGRES_DB: booking-service-db
+    ports:
+      - "5435:5432"
+  
+  redis1:
+    image: redis:latest
+    container_name: redis1
+    ports:
+      - "63791:6379"
+    networks:
+      - redlock-network
+
+  redis2:
+    image: redis:latest
+    container_name: redis2
+    ports:
+      - "63792:6379"
+    networks:
+      - redlock-network
+
+  redis3:
+    image: redis:latest
+    container_name: redis3
+    ports:
+      - "63793:6379"
+    networks:
+      - redlock-network
+        
+#  booking-service-1:
+#    build:
+#      context: ../BookingService
+#      dockerfile: Dockerfile
+#    image: myapp_image
+#    container_name: booking-service-1
+#    ports:
+#      - "5001:80"
+#        
+#  booking-service-2:
+#    build:
+#      context: ../BookingService
+#      dockerfile: Dockerfile
+#    image: myapp_image
+#    container_name: booking-service-2
+#    ports:
+#      - "5002:80"
+
+networks:
+  redlock-network:
+    driver: bridge
